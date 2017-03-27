@@ -10,7 +10,7 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('nickname', 'photo_thumbnail', 'tagline', 'registration_date')
     search_fields = ('nickname', 'tagline')
     fieldsets = (
-        ('Player', {'fields': (('nickname', 'password'), ('photo', 'photo_thumbnail', ), ('tagline', ), ), }), )
+        ('Player', {'fields': (('nickname', 'password'), ('photo', 'photo_thumbnail', ), ('tagline', 'audio'), ), }), )
     readonly_fields = ('photo_thumbnail', )
     ordering = ['-registration_date']
 
