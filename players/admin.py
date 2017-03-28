@@ -1,13 +1,11 @@
 from django.contrib import admin
 from players.models import Player
-from players.forms import PlayerAdminForm
 from imagekit.admin import AdminThumbnail
 
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    form = PlayerAdminForm
-    list_display = ('nickname', 'photo_thumbnail', 'tagline', 'registration_date')
+    list_display = ('nickname', 'tagline', 'photo_thumbnail', 'registration_date')
     search_fields = ('nickname', 'tagline')
     fieldsets = (
         ('Player', {'fields': (('nickname', 'password'), ('photo', 'photo_thumbnail', ), ('tagline', 'audio'), ), }), )

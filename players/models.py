@@ -14,6 +14,7 @@ class Player(models.Model):
     registration_date = models.DateTimeField('Data di registrazione', auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        # save password hash (sha512) and overwrite field
         pass_sha512 = hashlib.sha512(self.password.encode('utf-8'))
         self.password = pass_sha512.hexdigest()
         super(Player, self).save(*args, **kwargs)
