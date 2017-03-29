@@ -59,9 +59,9 @@ Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
 {
-    "player_register": false
+    "player_register": false,
     "fields": "nickname, password, tagline",
-    "info": "this fields require a string of max 255 chars and nickname must be unique",
+    "info": "this fields require a string of max 255 chars and nickname must be unique"
 }
 ```
 
