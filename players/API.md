@@ -13,6 +13,7 @@
 ```
 > http http://www.example.com/players/already-exists/?nickname="player nickname"
 HTTP/1.1 200 OK
+Connection: close
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
@@ -21,7 +22,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-http http://www.example.com/players/already-exists/?nickname="player nickname"
+> http http://www.example.com/players/already-exists/?nickname="player nickname"
 HTTP/1.1 200 OK
 Connection: close
 Content-Type: application/json
@@ -45,6 +46,7 @@ X-Frame-Options: SAMEORIGIN
 ```
 > http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password" tagline="player tagline"
 HTTP/1.1 200 OK
+Connection: close
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
@@ -54,6 +56,7 @@ X-Frame-Options: SAMEORIGIN
 ```
 ```
 > http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password" tagline="player tagline"
+HTTP/1.1 200 OK
 Connection: close
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
