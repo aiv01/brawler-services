@@ -32,7 +32,7 @@ X-Frame-Options: SAMEORIGIN
 
 #### Example with httpie
 ```
-> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password" tagline="player tagline" photo="path/of/photo.png" audio="path/of/audio.ogg"
+> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password" tagline="player tagline"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
