@@ -1,6 +1,6 @@
 from brawler.settings.base import *
 
-ALLOWED_HOSTS = ('brawler.com',)
+ALLOWED_HOSTS = ('taiga.aiv01.it',)
 
 DEBUG = False
 TEMPLATES[0]['OPTIONS']['debug'] = False
@@ -17,7 +17,7 @@ DATABASES = {
 }
 
 # Fab commands configuration
-WORKING_DIR = "www/brawler"
+WORKING_DIR = "www/brawler-services"
 HOST_USER = "30248"
 HOST_IP = ""
 HOST_PORT = "22"
