@@ -27,7 +27,7 @@ X-Frame-Options: SAMEORIGIN
 
 ### Register player
 * ***url***: '/players/register/'
-* ***variables***: nickname, password, tagline, photo, audio
+* ***variables***: nickname, password, tagline
 * ***return***: JSON
 
 #### Example with httpie
