@@ -1,6 +1,6 @@
 from brawler.settings.base import *
 
-
+ALLOWED_HOSTS = ('localhost', '127.0.0.1', 'testserver')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # Add 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

@@ -2,7 +2,7 @@ from brawler.settings.base import *
 import socket
 
 
-ALLOWED_HOSTS = ('localhost', '127.0.0.1')
+ALLOWED_HOSTS = ('localhost', '127.0.0.1', 'testserver')
 DEBUG = True
 TEMPLATES[0]['OPTIONS']['debug'] = True
 USE_DEBUG_TOOLBAR = True

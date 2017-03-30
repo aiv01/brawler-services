@@ -1,7 +1,7 @@
-import hashlib
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import SmartResize
+from players.utilities import password_to_sha512, create_token
 
 
 class Player(models.Model):
@@ -12,11 +12,14 @@ class Player(models.Model):
     audio = models.FileField('Audio', upload_to='players/audio/')
     tagline = models.CharField('Tagline', max_length=255)
     registration_date = models.DateTimeField('Data di registrazione', auto_now_add=True)
+    token = models.CharField('Token', max_length=128)
 
     def save(self, *args, **kwargs):
-        # save password hash (sha512) and overwrite field
-        pass_sha512 = hashlib.sha512(self.password.encode('utf-8'))
-        self.password = pass_sha512.hexdigest()
+        # password to sha512
+        self.password = password_to_sha512(password=self.password)
+        # create token
+        if len(self.token) < 128:
+            self.token = create_token(nickname=self.nickname, password=self.password)
         super(Player, self).save(*args, **kwargs)
 
     class Meta:

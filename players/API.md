@@ -91,7 +91,7 @@ b'{"player_upload_photo": true}'
 ```python
 >>> from urllib import request
 >>> url = 'http://localhost:8080/players/photo/?token=ba670d48832f90e0cef44e7cf22a99a70e'
->>> photo_base64 = <bit string encode base64 of .png>
+>>> photo_base64 = b'<bit string encode base64 of .png>'
 >>> req = request.Request(url, photo_base64, {'Content-Type': 'application/octet-stream'})
 >>> url_open = request.urlopen(req)
 >>> url_open.read()

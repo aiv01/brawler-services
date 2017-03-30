@@ -8,8 +8,8 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('nickname', 'tagline', 'photo_thumbnail', 'registration_date')
     search_fields = ('nickname', 'tagline')
     fieldsets = (
-        ('Player', {'fields': (('nickname', 'password'), ('photo', 'photo_thumbnail', ), ('tagline', 'audio'), ), }), )
-    readonly_fields = ('photo_thumbnail', )
+        ('Player', {'fields': (('nickname', 'password'), ('photo', 'photo_thumbnail', ), ('tagline', 'audio'), ('token', ), ), }), )
+    readonly_fields = ('token', 'photo_thumbnail', )
     ordering = ['-registration_date']
 
     photo_thumbnail = AdminThumbnail(image_field='photo_thumb', template='../templates/admin_lightbox/players_photos.html')
