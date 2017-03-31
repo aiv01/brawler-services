@@ -13,8 +13,10 @@ Player Registration: nickname, password, photo, audio, tagline
 Sprint 2 - April 3 - April 19
 -
 
-* store endpoint information (2 fields, one IPAddress and an unsigned short/int)
-* the clients sends the udp endpoint in the login call
+* store the ip address when doing login call
+* check the ip address for any subsequent request
+* add field for endpoint information (2 fields, one IPAddress and an unsigned short/int)
+* the clients sends the udp endpoint in the setendpoint call
 * implement the login call
 * add get_photo call
 * add get_audio call
