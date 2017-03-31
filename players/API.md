@@ -101,7 +101,7 @@ X-Frame-Options: SAMEORIGIN
 ```
 <br>
 
-### Login player
+### Auth player
 * ***url***: '/players/auth/'
 * ***variables***: token, ip
 * ***return***: JSON
