@@ -53,10 +53,13 @@ class PlayerLoginView(View):
         ip = get_ip(request)
 
         password = password_to_sha512(password)
+        token = None
 
         try:
             player = Player.objects.get(nickname=nickname,
                                         password=password, )
+            token = player.token
+
             player.ip = ip
             player.save()
 
@@ -65,7 +68,7 @@ class PlayerLoginView(View):
                                  'fields': 'nickname, password',
                                  'info': 'wrong nickname and/or password'})
 
-        return JsonResponse({'player_login': True, })
+        return JsonResponse({'player_login': True, 'token': token})
 
 
 class PlayerPhotoView(View):
