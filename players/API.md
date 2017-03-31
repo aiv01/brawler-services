@@ -68,6 +68,35 @@ X-Frame-Options: SAMEORIGIN
     "info": "this fields require a string of max 255 chars and nickname must be unique"
 }
 ```
+
+### Login player
+* ***url***: '/players/login/'
+* ***variables***: nickname, password
+* ***return***: JSON
+
+#### Examples with httpie:
+```
+> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "player_login": true
+}
+```
+```
+> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "fields": "nickname, password",
+    "info": "wrong nickname and/or password",
+    "player_login": false
+}
+```
 <br>
 
 ## GET/POST

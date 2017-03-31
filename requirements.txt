@@ -8,6 +8,7 @@ django-cookie-law==1.0.13
 django-coverage==1.2.4
 django-debug-toolbar==1.7
 django-imagekit==4.0
+django-ipware==1.1.6
 django-webtest==1.9.1
 flake8==3.3.0
 mccabe==0.6.1

@@ -1,9 +1,10 @@
 from django.views import View
 from django.http import JsonResponse
-from players.models import Player
-from players.utilities import bit_to_png
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from players.models import Player
+from players.utilities import password_to_sha512, bit_to_png
+from ipware.ip import get_ip
 
 
 class PlayerAlreadyExistsView(View):
@@ -41,6 +42,32 @@ class PlayerRegisterView(View):
         return JsonResponse({'player_register': True, 'token': player.token})
 
 
+class PlayerLoginView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerLoginView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        nickname = request.POST.get('nickname')
+        password = request.POST.get('password')
+        ip = get_ip(request)
+
+        password = password_to_sha512(password)
+
+        try:
+            player = Player.objects.get(nickname=nickname,
+                                        password=password, )
+            player.ip = ip
+            player.save()
+
+        except Player.DoesNotExist:
+            return JsonResponse({'player_login': False,
+                                 'fields': 'nickname, password',
+                                 'info': 'wrong nickname and/or password'})
+
+        return JsonResponse({'player_login': True, })
+
+
 class PlayerPhotoView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -53,6 +80,7 @@ class PlayerPhotoView(View):
         try:
             player = Player.objects.get(token=token)
             bit_to_png(player=player, photo=photo)
+
         except Player.DoesNotExist:
             return JsonResponse({'player_upload_photo': False,
                                  'info': 'player with this token does not exists'})

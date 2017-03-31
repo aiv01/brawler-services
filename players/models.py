@@ -11,6 +11,8 @@ class Player(models.Model):
     photo_thumb = ImageSpecField(source='photo', processors=[SmartResize(100, 100)], format='PNG', options={'quality': 100})
     audio = models.FileField('Audio', upload_to='players/audio/')
     tagline = models.CharField('Tagline', max_length=255)
+    ip = models.GenericIPAddressField('Indirizzo IP', blank=True, null=True)
+    port = models.SmallIntegerField('Porta', blank=True, null=True)
     registration_date = models.DateTimeField('Data di registrazione', auto_now_add=True)
     token = models.CharField('Token', max_length=36)
 
