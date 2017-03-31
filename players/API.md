@@ -52,7 +52,7 @@ X-Frame-Options: SAMEORIGIN
 
 {
   "player_register": true
-    "token": "ba670d48832f90e0cef44e7cf22a99a70ecf5bf9171b4f40fe14aac499ef5ecbb8f30ae398dd75a330fc28213b92234d558bb5c3dbd3a94856f34afedb6d2283"
+  "token": "e1cdcd42-0b98-4d12-82fd-53d0fb241ec6"
 }
 ```
 ```
@@ -75,24 +75,24 @@ X-Frame-Options: SAMEORIGIN
 ### Upload player photo
 * ***url***: '/players/photo/'
 * ***variables in GET***: token
-* ***raw data***: bit string encode base64 of .png
+* ***raw data***: bit string of .png
 * ***return***: JSON
 
 #### Example with python3 and urllib
 ```python
 >>> from urllib import request
->>> url = 'http://localhost:8080/players/photo/?token=ba670d48832f90e0cef44e7cf22a99a70ecf5bf9171b4f40fe14aac499ef5ecbb8f30ae398dd75a330fc28213b92234d558bb5c3dbd3a94856f34afedb6d2283'
->>> photo_base64 = b'<bit string encode base64 of .png>'
->>> req = request.Request(url, photo_base64, {'Content-Type': 'application/octet-stream'})
+>>> url = 'http://localhost:8080/players/photo/?token=e1cdcd42-0b98-4d12-82fd-53d0fb241ec6'
+>>> photo = b'<bit string of .png>'
+>>> req = request.Request(url, photo, {'Content-Type': 'application/octet-stream'})
 >>> url_open = request.urlopen(req)
 >>> url_open.read()
 b'{"player_upload_photo": true}'
 ```
 ```python
 >>> from urllib import request
->>> url = 'http://localhost:8080/players/photo/?token=ba670d48832f90e0cef44e7cf22a99a70e'
->>> photo_base64 = b'<bit string encode base64 of .png>'
->>> req = request.Request(url, photo_base64, {'Content-Type': 'application/octet-stream'})
+>>> url = 'http://localhost:8080/players/photo/?token=4d12-82fd-53d0fb241ec6'
+>>> photo = b'<bit string of .png>'
+>>> req = request.Request(url, photo, {'Content-Type': 'application/octet-stream'})
 >>> url_open = request.urlopen(req)
 >>> url_open.read()
 b'{"player_upload_photo": false, "info": "player with this token does not exists"}

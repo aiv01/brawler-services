@@ -1,7 +1,7 @@
 from django.views import View
 from django.http import JsonResponse
 from players.models import Player
-from players.utilities import base64_to_png
+from players.utilities import bit_to_png
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -52,7 +52,7 @@ class PlayerPhotoView(View):
 
         try:
             player = Player.objects.get(token=token)
-            base64_to_png(player=player, photo_b64_encode=photo)
+            bit_to_png(player=player, photo=photo)
         except Player.DoesNotExist:
             return JsonResponse({'player_upload_photo': False,
                                  'info': 'player with this token does not exists'})
