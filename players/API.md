@@ -82,7 +82,8 @@ Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
 {
-    "player_login": true
+    "player_login": true, 
+    "token": "e1cdcd42-0b98-4d12-82fd-53d0fb241ec6"
 }
 ```
 ```
