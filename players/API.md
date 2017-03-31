@@ -102,8 +102,8 @@ X-Frame-Options: SAMEORIGIN
 <br>
 
 ### Login player
-* ***url***: '/players/login/'
-* ***variables***: nickname, password
+* ***url***: '/players/auth/'
+* ***variables***: token, ip
 * ***return***: JSON
 
 #### Examples with httpie:
