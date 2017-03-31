@@ -71,6 +71,31 @@ class PlayerLoginView(View):
         return JsonResponse({'player_login': True, 'token': token})
 
 
+class PlayerAuthView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerAuthView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        ip = request.POST.get('ip')
+
+        try:
+            player = Player.objects.get(token=token)
+
+        except Player.DoesNotExist:
+            return JsonResponse({'auth_ok': False,
+                                 'fields': 'token',
+                                 'info': 'player with this token does not exists'})
+
+        if ip == player.ip:
+            return JsonResponse({'auth_ok': True})
+        else:
+            return JsonResponse({'aut_ok': False,
+                                 'fields': 'ip',
+                                 'info': 'ip are not equal'})
+
+
 class PlayerPhotoView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
