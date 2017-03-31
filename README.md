@@ -18,6 +18,7 @@ Sprint 2 - April 3 - April 19
 * implement the login call
 * add get_photo call
 * add get_audio call
+* add the setendpoint call
 
 (sprint meeting)
 
