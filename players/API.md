@@ -68,6 +68,7 @@ X-Frame-Options: SAMEORIGIN
     "info": "this fields require a string of max 255 chars and nickname must be unique"
 }
 ```
+<br>
 
 ### Login player
 * ***url***: '/players/login/'
@@ -82,7 +83,7 @@ Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
 {
-    "player_login": true, 
+    "player_login": true
     "token": "e1cdcd42-0b98-4d12-82fd-53d0fb241ec6"
 }
 ```
@@ -96,6 +97,48 @@ X-Frame-Options: SAMEORIGIN
     "fields": "nickname, password",
     "info": "wrong nickname and/or password",
     "player_login": false
+}
+```
+<br>
+
+### Login player
+* ***url***: '/players/login/'
+* ***variables***: nickname, password
+* ***return***: JSON
+
+#### Examples with httpie:
+```
+http -f POST http://example:8080/players/auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "auth_ok": true
+}
+```
+```
+http -f POST http://example:8080/players/auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "aut_ok": false,
+    "fields": "ip",
+    "info": "ip are not equal"
+}
+```
+```
+http -f POST http://example:8080/players/auth/ token="4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "auth_ok": false,
+    "fields": "token",
+    "info": "player with this token does not exists"
 }
 ```
 <br>
