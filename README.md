@@ -13,6 +13,12 @@ Player Registration: nickname, password, photo, audio, tagline
 Sprint 2 - April 3 - April 19
 -
 
+* store endpoint information (2 fields, one IPAddress and an unsigned short/int)
+* the clients sends the udp endpoint in the login call
+* implement the login call
+* add get_photo call
+* add get_audio call
+
 (sprint meeting)
 
 Sprint 3 - April 19 - May 3
