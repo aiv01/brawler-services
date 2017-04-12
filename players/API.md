@@ -156,7 +156,8 @@ Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
 {
-    "auth_ok": true
+    "auth_ok": true,
+    "nickname": "player nickname"
 }
 ```
 ```
