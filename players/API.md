@@ -18,7 +18,7 @@ Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
 
 {
-  "player_already_exists": false
+    "player_already_exists": false
 }
 ```
 ```
@@ -32,7 +32,49 @@ X-Frame-Options: SAMEORIGIN
     "player_already_exists": true
 }
 ```
+<br>
 
+### Get player's photo and audio
+* ***url***: '/players/photo-audio/'
+* ***variable***: nickname
+* ***return***: JSON
+
+#### Examples with httpie:
+```
+> http http://www.example.com/players/photo-audio/?nickname="player nickname"
+HTTP/1.1 200 OK
+Connection: close
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "photo": "www.example.com/media/players/photos/photo_player_nickname.png",
+    "audio": "www.example.com/media/players/audio/audio_player_nickname.ogg"
+}
+```
+```
+> http http://www.example.com/players/photo-audio/?nickname="player nickname 2"
+HTTP/1.1 200 OK
+Connection: close
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "photo": null,
+    "audio": null
+}
+```
+```
+> http http://www.example.com/players/photo-audio/?nickname="player nick"
+HTTP/1.1 200 OK
+Connection: close
+Content-Type: application/json
+X-Frame-Options: SAMEORIGIN
+
+{
+    "error": "player with this nickname does not exists"
+}
+```
 <br>
 
 ## POST

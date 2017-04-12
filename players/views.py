@@ -20,6 +20,28 @@ class PlayerAlreadyExistsView(View):
         return JsonResponse({'player_already_exists': player_already_exists})
 
 
+class PlayerPhotoAudioView(View):
+    def get(self, request):
+        nickname = request.GET.get('nickname')
+
+        host = request.get_host()
+        photo = None
+        audio = None
+
+        try:
+            player = Player.objects.get(nickname=nickname)
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this nickname does not exists'})
+
+        if player.photo:
+            photo = host + player.photo.url
+        if player.audio:
+            audio = host + player.audio.url
+
+        return JsonResponse({'photo': photo,
+                             'audio': audio})
+
+
 class PlayerRegisterView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
