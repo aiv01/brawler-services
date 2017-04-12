@@ -89,7 +89,8 @@ class PlayerAuthView(View):
                                  'info': 'player with this token does not exists'})
 
         if ip == player.ip:
-            return JsonResponse({'auth_ok': True})
+            return JsonResponse({'auth_ok': True,
+                                 'nickname': player.nickname})
         else:
             return JsonResponse({'aut_ok': False,
                                  'fields': 'ip',
