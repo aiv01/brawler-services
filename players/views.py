@@ -93,10 +93,10 @@ class PlayerLoginView(View):
         return JsonResponse({'player_login': True, 'token': token})
 
 
-class PlayerAuthView(View):
+class PlayerServerAuthView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(PlayerAuthView, self).dispatch(request, *args, **kwargs)
+        return super(PlayerServerAuthView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
         token = request.POST.get('token')
@@ -113,6 +113,34 @@ class PlayerAuthView(View):
         if ip == player.ip:
             return JsonResponse({'auth_ok': True,
                                  'nickname': player.nickname})
+        else:
+            return JsonResponse({'aut_ok': False,
+                                 'fields': 'ip',
+                                 'info': 'ip are not equal'})
+
+
+class PlayerClientAuthView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerClientAuthView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        port = request.POST.get('port')
+        ip = get_ip(request)
+
+        try:
+            player = Player.objects.get(token=token)
+
+        except Player.DoesNotExist:
+            return JsonResponse({'auth_ok': False,
+                                 'fields': 'token',
+                                 'info': 'player with this token does not exists'})
+
+        if ip == player.ip:
+            player.port = port
+            player.save()
+            return JsonResponse({'auth_ok': True})
         else:
             return JsonResponse({'aut_ok': False,
                                  'fields': 'ip',
