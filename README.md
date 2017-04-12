@@ -25,7 +25,9 @@ Sprint 2 - April 3 - April 19
 (sprint meeting)
 
 Sprint 3 - April 19 - May 3
--
+- 
+
+* Learn how to build graphs/charts from influxdb (evaluate javascript graphics libraries)
 
 (sprint meeting)
 
