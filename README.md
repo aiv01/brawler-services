@@ -29,10 +29,15 @@ Sprint 3 - April 19 - May 3
 
 * Learn how to build graphs/charts from influxdb (evaluate javascript graphics libraries)
 
+20170421 still missing microphone integration
+
 (sprint meeting)
 
 Sprint 4 - May 3 - May 17
 -
+
+* Server registration API for game server nodes
+* Server registration listing API for game clients
 
 (sprint meeting)
 
