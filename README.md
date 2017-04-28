@@ -27,7 +27,8 @@ Sprint 2 - April 3 - April 19
 Sprint 3 - April 19 - May 3
 - 
 
-* Learn how to build graphs/charts from influxdb (evaluate javascript graphics libraries)
+* Learn how to build graphs/charts from elasticsearch (evaluate javascript graphics libraries)
+* Install elasticsearch
 
 20170421 still missing microphone integration
 
