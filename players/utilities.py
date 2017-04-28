@@ -14,5 +14,10 @@ def bit_to_png(player, photo):
     player.save()
 
 
+def bit_to_bin(player, audio):
+    player.audio = ContentFile(audio, '{}.bin'.format(slugify(player.nickname)))
+    player.save()
+
+
 def create_token():
     return str(uuid.uuid4())

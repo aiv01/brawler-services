@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from players.models import Player
-from players.utilities import password_to_sha512, bit_to_png
+from players.utilities import password_to_sha512, bit_to_png, bit_to_bin
 from ipware.ip import get_ip
 
 
@@ -165,3 +165,23 @@ class PlayerPhotoView(View):
                                  'info': 'player with this token does not exists'})
 
         return JsonResponse({'player_upload_photo': True})
+
+
+class PlayerAudioView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerAudioView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.GET.get('token')
+        audio = request.body
+
+        try:
+            player = Player.objects.get(token=token)
+            bit_to_bin(player=player, audio=audio)
+
+        except Player.DoesNotExist:
+            return JsonResponse({'player_upload_audio': False,
+                                 'info': 'player with this token does not exists'})
+
+        return JsonResponse({'player_upload_audio': True})

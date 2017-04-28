@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from players.views import PlayerAlreadyExistsView, PlayerPhotoAudioView, PlayerRegisterView, PlayerLoginView, PlayerServerAuthView, PlayerClientAuthView, PlayerPhotoView
+from players.views import (PlayerAlreadyExistsView, PlayerPhotoAudioView, PlayerRegisterView, PlayerLoginView,
+                           PlayerServerAuthView, PlayerClientAuthView, PlayerPhotoView, PlayerAudioView)
 
 urlpatterns = [
     url(r'^already-exists/$', PlayerAlreadyExistsView.as_view(), name='player_already_exists'),
@@ -9,4 +10,5 @@ urlpatterns = [
     url(r'^server-auth/$', PlayerServerAuthView.as_view(), name='player_server_auth'),
     url(r'^client-auth/$', PlayerClientAuthView.as_view(), name='player_client_auth'),
     url(r'^photo/$', PlayerPhotoView.as_view(), name='player_photo'),
+    url(r'^audio/$', PlayerAudioView.as_view(), name='player_audio'),
 ]
