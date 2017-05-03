@@ -37,6 +37,7 @@ Sprint 3 - April 19 - May 3
 Sprint 4 - May 3 - May 17
 -
 
+* Study Elasticsearch
 * Server registration API for game server nodes
 * Server registration listing API for game clients
 
