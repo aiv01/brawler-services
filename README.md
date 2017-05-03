@@ -38,6 +38,7 @@ Sprint 4 - May 3 - May 17
 -
 
 * Study Elasticsearch
+* Audio recording (TD)
 * Server registration API for game server nodes
 * Server registration listing API for game clients
 
