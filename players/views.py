@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from players.models import Player
-from players.utilities import password_to_sha512, bit_to_png
+from players.utilities import password_to_sha512, create_token, bit_to_png
 from ipware.ip import get_ip
 
 
@@ -75,13 +75,11 @@ class PlayerLoginView(View):
         ip = get_ip(request)
 
         password = password_to_sha512(password)
-        token = None
 
         try:
             player = Player.objects.get(nickname=nickname,
                                         password=password, )
-            token = player.token
-
+            player.token = create_token()
             player.ip = ip
             player.save()
 
@@ -90,7 +88,7 @@ class PlayerLoginView(View):
                                  'fields': 'nickname, password',
                                  'info': 'wrong nickname and/or password'})
 
-        return JsonResponse({'player_login': True, 'token': token})
+        return JsonResponse({'player_login': True, 'token': player.token})
 
 
 class PlayerServerAuthView(View):

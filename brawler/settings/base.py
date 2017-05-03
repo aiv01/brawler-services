@@ -97,3 +97,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+AUTH_USER_MODEL = 'players.Player'
