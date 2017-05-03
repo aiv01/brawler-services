@@ -52,6 +52,8 @@ Sprint 5 - May 17 - May 31
 Sprint 6 - May 31 - Jun 14 
 -
 
+* Achievements (backstab, km run, number of attacks, combo length ...)
+
 (sprint meeting)
 
 Sprint 7 - Jun 14 - Jun 28
