@@ -54,9 +54,9 @@ class PlayerRegisterView(View):
         tagline = request.POST.get('tagline')
 
         try:
-            player = Player.objects.create(username=nickname,
-                                           password=password,
-                                           tagline=tagline, )
+            player = Player.objects.create_user(username=nickname,
+                                                password=password,
+                                                tagline=tagline)
         except:
             return JsonResponse({'player_register': False,
                                  'fields': 'nickname, password, tagline',
