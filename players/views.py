@@ -2,8 +2,9 @@ from django.views import View
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
 from players.models import Player
-from players.utilities import password_to_sha512, bit_to_png, bit_to_bin
+from players.utilities import create_token, bit_to_png, bit_to_bin
 from ipware.ip import get_ip
 
 
@@ -13,7 +14,7 @@ class PlayerAlreadyExistsView(View):
         player_already_exists = True
 
         try:
-            Player.objects.get(nickname=nickname)
+            Player.objects.get(username=nickname)
         except Player.DoesNotExist:
             player_already_exists = False
 
@@ -29,7 +30,7 @@ class PlayerPhotoAudioView(View):
         audio = None
 
         try:
-            player = Player.objects.get(nickname=nickname)
+            player = Player.objects.get(username=nickname)
         except Player.DoesNotExist:
             return JsonResponse({'error': 'player with this nickname does not exists'})
 
@@ -53,13 +54,13 @@ class PlayerRegisterView(View):
         tagline = request.POST.get('tagline')
 
         try:
-            player = Player.objects.create(nickname=nickname,
+            player = Player.objects.create(username=nickname,
                                            password=password,
                                            tagline=tagline, )
         except:
             return JsonResponse({'player_register': False,
                                  'fields': 'nickname, password, tagline',
-                                 'info': 'this fields require a string of max 255 chars and nickname must be unique'})
+                                 'info': 'password and tagline require a string of max 255 chars. Nickname must be unique and require a string of max 150 chars'})
 
         return JsonResponse({'player_register': True, 'token': player.token})
 
@@ -74,23 +75,19 @@ class PlayerLoginView(View):
         password = request.POST.get('password')
         ip = get_ip(request)
 
-        password = password_to_sha512(password)
-        token = None
-
         try:
-            player = Player.objects.get(nickname=nickname,
-                                        password=password, )
-            token = player.token
+            player = authenticate(username=nickname, password=password)
 
+            player.token = create_token()
             player.ip = ip
             player.save()
 
-        except Player.DoesNotExist:
+        except:
             return JsonResponse({'player_login': False,
                                  'fields': 'nickname, password',
                                  'info': 'wrong nickname and/or password'})
 
-        return JsonResponse({'player_login': True, 'token': token})
+        return JsonResponse({'player_login': True, 'token': player.token})
 
 
 class PlayerServerAuthView(View):
@@ -112,7 +109,7 @@ class PlayerServerAuthView(View):
 
         if ip == player.ip:
             return JsonResponse({'auth_ok': True,
-                                 'nickname': player.nickname})
+                                 'nickname': player.username})
         else:
             return JsonResponse({'aut_ok': False,
                                  'fields': 'ip',

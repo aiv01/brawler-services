@@ -5,7 +5,7 @@
 	{{ block.super }}
 
 	{% if thumbnail %}
-		<a class="image-link" href="{{ model.photo.url }}" title="{{ model.nickname }}">
+		<a class="image-link" href="{{ model.photo.url }}" title="{{ model.username }}">
 			<img src="{{ thumbnail.url }}">
 		</a>
 	{% endif %}

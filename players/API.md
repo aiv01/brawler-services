@@ -119,7 +119,7 @@ X-Frame-Options: SAMEORIGIN
 
 #### Examples with httpie:
 ```
-> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password"
+> http -f POST http://www.example.com/players/login/ nickname="player nickname" password="player password"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -130,7 +130,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-> http -f POST http://www.example.com/players/register/ nickname="player nickname" password="player password"
+> http -f POST http://www.example.com/players/login/ nickname="player nickname" password="player password"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -260,6 +260,4 @@ b'{"player_upload_photo": false, "info": "player with this token does not exists
 <hr>
 
 ##### TODO
-* Player login
-* Player upload audio
 * Player change password
