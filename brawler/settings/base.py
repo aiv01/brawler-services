@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'imagekit',
+    'admin_reorder',
     'players',
     # 'cookielaw',
 ]
@@ -45,6 +46,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 TEMPLATES = [
@@ -99,3 +101,7 @@ MEDIA_URL = '/media/'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 AUTH_USER_MODEL = 'players.Player'
+
+ADMIN_REORDER = (
+    {'app': 'players', },
+)

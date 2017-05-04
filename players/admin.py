@@ -8,6 +8,7 @@ from imagekit.admin import AdminThumbnail
 class PlayerAdmin(UserAdmin):
     list_display = ('username', 'tagline', 'photo_thumbnail', 'ip', 'port', 'registration_date')
     search_fields = ('username', 'tagline', 'ip', 'port')
+    date_hierarchy = 'registration_date'
     list_filter = ('is_active', 'is_staff', 'is_superuser')
     fieldsets = (
         ('Dati', {'fields': (('username', 'registration_date'), ('photo', 'photo_thumbnail', ), ('tagline', 'audio'), ), }),
