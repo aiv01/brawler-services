@@ -150,7 +150,7 @@ X-Frame-Options: SAMEORIGIN
 
 #### Examples with httpie:
 ```
-http -f POST http://example:8080/players/server-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+http -f POST http://www.example.com/players/server-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -161,7 +161,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-http -f POST http://example:8080/players/server-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+http -f POST http://www.example.com/players/server-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -173,7 +173,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-http -f POST http://example:8080/players/server-auth/ token="4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
+http -f POST http://www.example.com/players/server-auth/ token="4d12-82fd-53d0fb241ec6" ip="89.100.11.22"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -193,7 +193,7 @@ X-Frame-Options: SAMEORIGIN
 
 #### Examples with httpie:
 ```
-http -f POST http://example:8080/players/client-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" port="2468"
+http -f POST http://www.example.com/players/client-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" port="2468"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -203,7 +203,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-http -f POST http://example:8080/players/client-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" port="2468"
+http -f POST http://www.example.com/players/client-auth/ token="e1cdcd42-0b98-4d12-82fd-53d0fb241ec6" port="2468"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -215,7 +215,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 ```
-http -f POST http://example:8080/players/client-auth/ token="4d12-82fd-53d0fb241ec6" port="2468"
+http -f POST http://www.example.com/players/client-auth/ token="4d12-82fd-53d0fb241ec6" port="2468"
 HTTP/1.1 200 OK
 Content-Type: application/json
 X-Frame-Options: SAMEORIGIN
@@ -239,7 +239,7 @@ X-Frame-Options: SAMEORIGIN
 #### Example with python3 and urllib
 ```python
 >>> from urllib import request
->>> url = 'http://localhost:8080/players/photo/?token=e1cdcd42-0b98-4d12-82fd-53d0fb241ec6'
+>>> url = 'http://www.example.com/players/photo/?token=e1cdcd42-0b98-4d12-82fd-53d0fb241ec6'
 >>> photo = b'<bit string of .png>'
 >>> req = request.Request(url, photo, {'Content-Type': 'application/octet-stream'})
 >>> url_open = request.urlopen(req)
@@ -248,7 +248,7 @@ b'{"player_upload_photo": true}'
 ```
 ```python
 >>> from urllib import request
->>> url = 'http://localhost:8080/players/photo/?token=4d12-82fd-53d0fb241ec6'
+>>> url = 'http://www.example.com/players/photo/?token=4d12-82fd-53d0fb241ec6'
 >>> photo = b'<bit string of .png>'
 >>> req = request.Request(url, photo, {'Content-Type': 'application/octet-stream'})
 >>> url_open = request.urlopen(req)
