@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'imagekit',
     'admin_reorder',
     'players',
+    'servers',
     # 'cookielaw',
 ]
 
@@ -104,4 +105,5 @@ AUTH_USER_MODEL = 'players.Player'
 
 ADMIN_REORDER = (
     {'app': 'players', },
+    {'app': 'servers', },
 )
