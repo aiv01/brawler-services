@@ -47,6 +47,9 @@ Sprint 4 - May 3 - May 17
 Sprint 5 - May 17 - May 31
 -
 
+* Ladder/Leaderboard api
+* Credits API
+
 (sprint meeting)
 
 Sprint 6 - May 31 - Jun 14 
