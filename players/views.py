@@ -173,7 +173,7 @@ class PlayerPhotoView(View):
 
     def post(self, request):
         token = request.POST.get('token')
-        photo = request.POST.get('photo')
+        photo = request.body
 
         try:
             player = Player.objects.get(token=token)
