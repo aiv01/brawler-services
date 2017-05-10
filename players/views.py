@@ -164,7 +164,7 @@ class PlayerPhotoView(View):
         return super(PlayerPhotoView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        token = request.GET.get('token')
+        token = request.POST.get('token')
         photo = request.body
 
         try:
@@ -184,7 +184,7 @@ class PlayerAudioView(View):
         return super(PlayerAudioView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        token = request.GET.get('token')
+        token = request.POST.get('token')
         audio = request.body
 
         try:
