@@ -9,6 +9,7 @@ from ipware.ip import get_ip
 
 
 class PlayerAlreadyExistsView(View):
+
     def get(self, request):
         nickname = request.GET.get('nickname')
         player_already_exists = True
@@ -22,6 +23,7 @@ class PlayerAlreadyExistsView(View):
 
 
 class PlayerGetPhotoView(View):
+
     def get(self, request):
         nickname = request.GET.get('nickname')
 
@@ -40,6 +42,7 @@ class PlayerGetPhotoView(View):
 
 
 class PlayerGetAudioView(View):
+
     def get(self, request):
         nickname = request.GET.get('nickname')
 
@@ -58,6 +61,7 @@ class PlayerGetAudioView(View):
 
 
 class PlayerRegisterView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerRegisterView, self).dispatch(request, *args, **kwargs)
@@ -80,6 +84,7 @@ class PlayerRegisterView(View):
 
 
 class PlayerLoginView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerLoginView, self).dispatch(request, *args, **kwargs)
@@ -105,6 +110,7 @@ class PlayerLoginView(View):
 
 
 class PlayerServerAuthView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerServerAuthView, self).dispatch(request, *args, **kwargs)
@@ -131,6 +137,7 @@ class PlayerServerAuthView(View):
 
 
 class PlayerClientAuthView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerClientAuthView, self).dispatch(request, *args, **kwargs)
@@ -159,13 +166,14 @@ class PlayerClientAuthView(View):
 
 
 class PlayerPhotoView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerPhotoView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
         token = request.POST.get('token')
-        photo = request.body
+        photo = request.POST.get('photo')
 
         try:
             player = Player.objects.get(token=token)
@@ -179,6 +187,7 @@ class PlayerPhotoView(View):
 
 
 class PlayerAudioView(View):
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(PlayerAudioView, self).dispatch(request, *args, **kwargs)
