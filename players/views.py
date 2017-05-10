@@ -70,11 +70,13 @@ class PlayerRegisterView(View):
         nickname = request.POST.get('nickname')
         password = request.POST.get('password')
         tagline = request.POST.get('tagline')
+        ip = get_ip(request)
 
         try:
             player = Player.objects.create_user(username=nickname,
                                                 password=password,
-                                                tagline=tagline)
+                                                tagline=tagline,
+                                                ip=ip)
         except:
             return JsonResponse({'player_register': False,
                                  'fields': 'nickname, password, tagline',
