@@ -162,7 +162,7 @@ class PlayerClientAuthView(View):
             player.save()
             return JsonResponse({'auth_ok': True})
         else:
-            return JsonResponse({'aut_ok': False,
+            return JsonResponse({'auth_ok': False,
                                  'fields': 'ip',
                                  'info': 'ip are not equal'})
 
