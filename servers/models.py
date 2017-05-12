@@ -4,7 +4,7 @@ from geolite2 import geolite2
 
 class Server(models.Model):
     ip = models.GenericIPAddressField('Indirizzo IP')
-    port = models.SmallIntegerField('Porta')
+    port = models.PositiveIntegerField('Porta')
     country = models.CharField('Country', max_length=255, blank=True, null=True)
     latitude = models.FloatField('Latitude', blank=True, null=True)
     longitude = models.DecimalField('Longitude', max_digits=10, decimal_places=8, blank=True, null=True)

@@ -11,7 +11,7 @@ class Player(AbstractUser):
     audio = models.FileField('Audio', upload_to='players/audio/', blank=True, null=True)
     tagline = models.CharField('Tagline', max_length=255, blank=True, null=True)
     ip = models.GenericIPAddressField('Indirizzo IP', blank=True, null=True)
-    port = models.SmallIntegerField('Porta', blank=True, null=True)
+    port = models.PositiveIntegerField('Porta', blank=True, null=True)
     registration_date = models.DateTimeField('Data di registrazione', auto_now_add=True)
     token = models.UUIDField('Token', default=uuid.uuid4, editable=True)
 
