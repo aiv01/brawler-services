@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.views import View
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -101,6 +102,7 @@ class PlayerLoginView(View):
 
             player.token = create_token()
             player.ip = ip
+            player.last_login = datetime.now()
             player.save()
 
         except:
