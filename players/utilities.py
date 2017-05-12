@@ -14,4 +14,4 @@ def bit_to_bin(player, audio):
 
 
 def create_token():
-    return str(uuid.uuid4())
+    return uuid.uuid4()

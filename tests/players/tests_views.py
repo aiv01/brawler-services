@@ -31,7 +31,7 @@ class PlayerRegisterViewTests(TestCase):
 
     def test_player_registration(self):
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_register': True, 'token': Player.objects.get(username='player2').token})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_register': True, 'token': str(Player.objects.get(username='player2').token)})
         response = self.client.post(self.url, self.send_data)
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_register': False,
                                                                       'fields': 'nickname, password, tagline',
@@ -48,7 +48,7 @@ class PlayerLoginViewTests(SetupTestCase):
 
     def test_player_login_true(self):
         response = self.client.post(self.url, self.send_data_true)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_login': True, 'token': Player.objects.get(username='player').token})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_login': True, 'token': str(Player.objects.get(username='player').token)})
 
     def test_player_login_false(self):
         response = self.client.post(self.url, self.send_data_false)
