@@ -1,7 +1,7 @@
-from tests.setuptest import SetupTestCase
+from tests.setuptest import PlayersSetupTestCase
 
 
-class PlayerStrTests(SetupTestCase):
+class PlayerStrTests(PlayersSetupTestCase):
 
     def test_return_str(self):
         self.assertEqual(str(self.player), 'player')

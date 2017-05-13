@@ -10,5 +10,5 @@ class ServerAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Server', {'fields': (('ip', 'port'), ), }),
         ('Location', {'fields': ('country', ), }),
-        ('Position', {'fields': ('latitude', 'longitude'), }), )
+        ('Position', {'fields': (('latitude', 'longitude'), ), }), )
     readonly_fields = ('country', 'latitude', 'longitude')
