@@ -2,6 +2,7 @@ from django.conf.urls import url
 from players.views import (PlayerAlreadyExistsView, PlayerGetPhotoView, PlayerGetAudioView, PlayerRegisterView, PlayerLoginView,
                            PlayerServerAuthView, PlayerClientAuthView, PlayerPhotoView, PlayerAudioView)
 
+
 urlpatterns = [
     url(r'^already-exists/$', PlayerAlreadyExistsView.as_view(), name='player_already_exists'),
     url(r'^get-photo/$', PlayerGetPhotoView.as_view(), name='player_get_photo'),
