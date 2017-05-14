@@ -24,9 +24,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'imagekit',
+    'sortable',
     'admin_reorder',
     'players',
     'servers',
+    'credits',
     # 'cookielaw',
 ]
 
@@ -106,4 +108,5 @@ AUTH_USER_MODEL = 'players.Player'
 ADMIN_REORDER = (
     {'app': 'players', },
     {'app': 'servers', },
+    {'app': 'credits', 'models': ('credits.Credit', 'credits.Role')},
 )

@@ -26,6 +26,7 @@ pyparsing==2.2.0
 pytz==2017.2
 six==1.10.0
 sqlparse==0.2.3
+twentytab-sortable==0.11
 uWSGI==2.0.14
 waitress==1.0.2
 WebOb==1.7.2
