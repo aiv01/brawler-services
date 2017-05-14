@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from credits.models import Credit
 
 
-class CreditListView(View):
+class CreditJsonView(View):
 
     def get_credits(self):
         credits = Credit.objects.all().order_by('position')

@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from credits.views import CreditListView
+from credits.views import CreditJsonView
 
 urlpatterns = [
-    url(r'^json/$', CreditListView.as_view(), name='credits_json'),
+    url(r'^json/$', CreditJsonView.as_view(), name='credits_json'),
 ]
