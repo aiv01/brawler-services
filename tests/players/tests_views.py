@@ -21,52 +21,6 @@ class PlayerAlreadyExistsViewTests(PlayersSetupTestCase):
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'player_already_exists': False})
 
 
-class PlayerGetPhotoViewTest(PlayersSetupTestCase):
-
-    def setUp(self):
-        super().setUp()
-        self.url = reverse('player_get_photo')
-        self.send_data = {'nickname': 'player'}
-        self.send_data_wrong_nickname = {'nickname': 'player2'}
-
-    def test_player_get_photo(self):
-        response = self.client.get(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo': 'testserver{}'.format(self.player.photo.url)})
-
-    def test_player_get_photo_no_photo(self):
-        self.player.photo = None
-        self.player.save()
-        response = self.client.get(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo': None})
-
-    def test_player_get_photo_wrong_nickname(self):
-        response = self.client.get(self.url, self.send_data_wrong_nickname)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this nickname does not exists'})
-
-
-class PlayerGetAudioViewTest(PlayersSetupTestCase):
-
-    def setUp(self):
-        super().setUp()
-        self.url = reverse('player_get_audio')
-        self.send_data = {'nickname': 'player'}
-        self.send_data_wrong_nickname = {'nickname': 'player2'}
-
-    def test_player_get_audio(self):
-        response = self.client.get(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio': 'testserver{}'.format(self.player.audio.url)})
-
-    def test_player_get_audio_no_audio(self):
-        self.player.audio = None
-        self.player.save()
-        response = self.client.get(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio': None})
-
-    def test_player_get_audio_wrong_nickname(self):
-        response = self.client.get(self.url, self.send_data_wrong_nickname)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this nickname does not exists'})
-
-
 class PlayerRegisterViewTests(TestCase):
 
     def setUp(self):
@@ -109,6 +63,7 @@ class PlayerServerAuthViewTest(PlayersSetupTestCase):
         self.send_data_true = {'token': self.player.token, 'ip': '127.0.0.1'}
         self.send_data_false = {'token': self.player.token, 'ip': '128.1.1.2'}
         self.send_data_wrong_token = {'token': '2c16bed0-f468-4e06-b68e-f930ea994f44', 'ip': '127.0.0.1'}
+        self.send_data_wrong_token_format = {'token': '1230-0034-0323-dkfm', 'ip': '127.0.0.1'}
 
     def test_player_server_auth_true(self):
         response = self.client.post(self.url, self.send_data_true)
@@ -127,6 +82,10 @@ class PlayerServerAuthViewTest(PlayersSetupTestCase):
                                                                       'fields': 'token',
                                                                       'info': 'player with this token does not exists'})
 
+    def test_player_server_auth_wrong_token_format(self):
+        response = self.client.post(self.url, self.send_data_wrong_token_format)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})
+
 
 class PlayerClientAuthViewTest(PlayersSetupTestCase):
 
@@ -136,6 +95,7 @@ class PlayerClientAuthViewTest(PlayersSetupTestCase):
         self.send_data_true = {'token': self.player.token, 'port': '8080'}
         self.send_data_false = {'token': self.player.token, 'port': '8080'}
         self.send_data_wrong_token = {'token': '2c16bed0-f468-4e06-b68e-f930ea994f44', 'port': '8080'}
+        self.send_data_wrong_token_format = {'token': '1230-0034-0323-dkfm', 'port': '8080'}
 
     def test_player_client_auth_true(self):
         response = self.client.post(self.url, self.send_data_true)
@@ -154,3 +114,85 @@ class PlayerClientAuthViewTest(PlayersSetupTestCase):
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'auth_ok': False,
                                                                       'fields': 'ip',
                                                                       'info': 'ip are not equal'})
+
+    def test_player_client_auth_wrong_token_format(self):
+        response = self.client.post(self.url, self.send_data_wrong_token_format)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})
+
+
+class PlayerGetPhotoListViewTest(PlayersSetupTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.player2 = Player.objects.create_user(username='player2', password='password2', tagline='tagline2',
+                                                  photo='test.png', audio='test.ogg', ip='127.0.0.1')
+        self.url = reverse('player_get_photo_list')
+        self.send_data = {'token': self.player.token, 'nickname_list': 'player, player2'}
+        self.send_data_wrong_nickname = {'token': self.player.token, 'nickname_list': 'player, player_two'}
+        self.send_data_wrong_token = {'token': '2c16bed0-f468-4e06-b68e-f930ea994f44', 'nickname_list': 'player, player2'}
+        self.send_data_wrong_token_format = {'token': '1230-0034-0323-dkfm', 'nickname_list': 'player, player2'}
+
+    def test_player_get_photo_list(self):
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo_list': [
+            {'nickname': 'player', 'photo': 'testserver{}'.format(self.player.photo.url)},
+            {'nickname': 'player2', 'photo': 'testserver{}'.format(self.player2.photo.url)}]})
+
+    def test_player_get_photo_list_no_photo(self):
+        self.player2.photo = None
+        self.player2.save()
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo_list': [
+            {'nickname': 'player', 'photo': 'testserver{}'.format(self.player.photo.url)},
+            {'nickname': 'player2', 'photo': None}]})
+
+    def test_player_get_photo_list_wrong_nickname(self):
+        response = self.client.post(self.url, self.send_data_wrong_nickname)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player \'player_two\' does not exists'})
+
+    def test_player_get_photo_list_wrong_token(self):
+        response = self.client.post(self.url, self.send_data_wrong_token)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this token does not exists'})
+
+    def test_player_get_photo_list_wrong_token_format(self):
+        response = self.client.post(self.url, self.send_data_wrong_token_format)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})
+
+
+class PlayerGetAudioListViewTest(PlayersSetupTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.player2 = Player.objects.create_user(username='player2', password='password2', tagline='tagline2',
+                                                  photo='test.png', audio='test.ogg', ip='127.0.0.1')
+        self.url = reverse('player_get_audio_list')
+        self.send_data = {'token': self.player.token, 'nickname_list': 'player, player2'}
+        self.send_data_wrong_nickname = {'token': self.player.token, 'nickname_list': 'player, player_two'}
+        self.send_data_wrong_token = {'token': '2c16bed0-f468-4e06-b68e-f930ea994f44', 'nickname_list': 'player, player2'}
+        self.send_data_wrong_token_format = {'token': '1230-0034-0323-dkfm', 'nickname_list': 'player, player2'}
+
+    def test_player_get_audio_list(self):
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio_list': [
+            {'nickname': 'player', 'audio': 'testserver{}'.format(self.player.audio.url)},
+            {'nickname': 'player2', 'audio': 'testserver{}'.format(self.player2.audio.url)}]})
+
+    def test_player_get_audio_list_no_audio(self):
+        self.player2.audio = None
+        self.player2.save()
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio_list': [
+            {'nickname': 'player', 'audio': 'testserver{}'.format(self.player.audio.url)},
+            {'nickname': 'player2', 'audio': None}]})
+
+    def test_player_get_audio_list_wrong_nickname(self):
+        response = self.client.post(self.url, self.send_data_wrong_nickname)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player \'player_two\' does not exists'})
+
+    def test_player_get_audio_list_wrong_token(self):
+        response = self.client.post(self.url, self.send_data_wrong_token)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this token does not exists'})
+
+    def test_player_get_audio_list_wrong_token_format(self):
+        response = self.client.post(self.url, self.send_data_wrong_token_format)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})

@@ -88,7 +88,8 @@ class PlayerServerAuthView(View):
 
         try:
             player = Player.objects.get(token=token)
-
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
         except Player.DoesNotExist:
             return JsonResponse({'auth_ok': False,
                                  'fields': 'token',
@@ -116,7 +117,8 @@ class PlayerClientAuthView(View):
 
         try:
             player = Player.objects.get(token=token)
-
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
         except Player.DoesNotExist:
             return JsonResponse({'auth_ok': False,
                                  'fields': 'token',
@@ -144,11 +146,13 @@ class PlayerPhotoView(View):
 
         try:
             player = Player.objects.get(token=token)
-            bit_to_png(player=player, photo=photo)
-
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
         except Player.DoesNotExist:
             return JsonResponse({'player_upload_photo': False,
                                  'info': 'player with this token does not exists'})
+
+        bit_to_png(player=player, photo=photo)
 
         return JsonResponse({'player_upload_photo': True})
 
@@ -165,20 +169,22 @@ class PlayerAudioView(View):
 
         try:
             player = Player.objects.get(token=token)
-            bit_to_bin(player=player, audio=audio)
-
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
         except Player.DoesNotExist:
             return JsonResponse({'player_upload_audio': False,
                                  'info': 'player with this token does not exists'})
 
+        bit_to_bin(player=player, audio=audio)
+
         return JsonResponse({'player_upload_audio': True})
 
 
-class PlayerGetPhotoView(View):
+class PlayerGetPhotoListView(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(PlayerGetPhotoView, self).dispatch(request, *args, **kwargs)
+        return super(PlayerGetPhotoListView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
         token = request.POST.get('token')
@@ -210,11 +216,11 @@ class PlayerGetPhotoView(View):
         return JsonResponse({'photo_list': photo_list})
 
 
-class PlayerGetAudioView(View):
+class PlayerGetAudioListView(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(PlayerGetAudioView, self).dispatch(request, *args, **kwargs)
+        return super(PlayerGetAudioListView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
         token = request.POST.get('token')
