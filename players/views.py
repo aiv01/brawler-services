@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
 from players.models import Player
 from players.utilities import create_token, bit_to_png, bit_to_bin
 from ipware.ip import get_ip
@@ -21,44 +22,6 @@ class PlayerAlreadyExistsView(View):
             player_already_exists = False
 
         return JsonResponse({'player_already_exists': player_already_exists})
-
-
-class PlayerGetPhotoView(View):
-
-    def get(self, request):
-        nickname = request.GET.get('nickname')
-
-        host = request.get_host()
-        photo = None
-
-        try:
-            player = Player.objects.get(username=nickname)
-        except Player.DoesNotExist:
-            return JsonResponse({'error': 'player with this nickname does not exists'})
-
-        if player.photo:
-            photo = host + player.photo.url
-
-        return JsonResponse({'photo': photo})
-
-
-class PlayerGetAudioView(View):
-
-    def get(self, request):
-        nickname = request.GET.get('nickname')
-
-        host = request.get_host()
-        audio = None
-
-        try:
-            player = Player.objects.get(username=nickname)
-        except Player.DoesNotExist:
-            return JsonResponse({'error': 'player with this nickname does not exists'})
-
-        if player.audio:
-            audio = host + player.audio.url
-
-        return JsonResponse({'audio': audio})
 
 
 class PlayerRegisterView(View):
@@ -209,3 +172,75 @@ class PlayerAudioView(View):
                                  'info': 'player with this token does not exists'})
 
         return JsonResponse({'player_upload_audio': True})
+
+
+class PlayerGetPhotoView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerGetPhotoView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        nickname_list = request.POST.get('nickname_list')
+
+        nickname_list = nickname_list.split(', ')
+        photo_list = []
+        host = request.get_host()
+
+        try:
+            Player.objects.get(token=token)
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this token does not exists'})
+
+        for nickname in nickname_list:
+
+            try:
+                player = Player.objects.get(username=nickname)
+            except:
+                return JsonResponse({'error': 'player \'{}\' does not exists'.format(nickname)})
+
+            try:
+                photo_list.append({'nickname': nickname, 'photo': host + player.photo.url})
+            except:
+                photo_list.append({'nickname': nickname, 'photo': None})
+
+        return JsonResponse({'photo_list': photo_list})
+
+
+class PlayerGetAudioView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerGetAudioView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        nickname_list = request.POST.get('nickname_list')
+
+        nickname_list = nickname_list.split(', ')
+        audio_list = []
+        host = request.get_host()
+
+        try:
+            Player.objects.get(token=token)
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this token does not exists'})
+
+        for nickname in nickname_list:
+
+            try:
+                player = Player.objects.get(username=nickname)
+            except:
+                return JsonResponse({'error': 'player \'{}\' does not exists'.format(nickname)})
+
+            try:
+                audio_list.append({'nickname': nickname, 'audio': host + player.audio.url})
+            except:
+                audio_list.append({'nickname': nickname, 'audio': None})
+
+        return JsonResponse({'audio_list': audio_list})
