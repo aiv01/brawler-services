@@ -197,7 +197,7 @@ class PlayerAudioView(View):
         return super(PlayerAudioView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        token = request.POST.get('token')
+        token = request.GET.get('token')
         audio = request.body
 
         try:
