@@ -7,7 +7,7 @@ class Server(models.Model):
     port = models.PositiveIntegerField('Porta')
     country = models.CharField('Country', max_length=255, blank=True, null=True)
     latitude = models.FloatField('Latitude', blank=True, null=True)
-    longitude = models.DecimalField('Longitude', max_digits=10, decimal_places=8, blank=True, null=True)
+    longitude = models.FloatField('Longitude', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         try:
