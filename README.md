@@ -40,22 +40,27 @@ Sprint 4 - May 3 - May 17
 * Study Elasticsearch
 * Audio recording (TD)
 * Server registration API for game server nodes
-* Server registration listing API for game clients
+
 
 (sprint meeting)
+
+20170517 TD Elasticsearch
+20170517 postponed listing api for game clients
 
 Sprint 5 - May 17 - May 31
 -
 
-* Ladder/Leaderboard api
-* Credits API
+* Ladder/Leaderboard api (Stefano, Christian, Alberto)
+* Achievements (backstab, km run, number of attacks, combo length ...)
+* Credits API (finalize)
+* Study ElasticSearch
 
 (sprint meeting)
 
 Sprint 6 - May 31 - Jun 14 
 -
 
-* Achievements (backstab, km run, number of attacks, combo length ...)
+* Server registration listing API for game clients
 
 (sprint meeting)
 
