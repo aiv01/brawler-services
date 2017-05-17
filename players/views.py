@@ -213,7 +213,7 @@ class PlayerGetPhotoListView(View):
             except:
                 photo_dict[nickname] = None
 
-        return JsonResponse(photo_dict)
+        return JsonResponse({'photo_list': photo_dict})
 
 
 class PlayerGetAudioListView(View):
@@ -249,4 +249,4 @@ class PlayerGetAudioListView(View):
             except:
                 audio_dict[nickname] = None
 
-        return JsonResponse(audio_dict)
+        return JsonResponse({'audio_list': audio_dict})

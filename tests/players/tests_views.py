@@ -134,15 +134,15 @@ class PlayerGetPhotoListViewTest(PlayersSetupTestCase):
 
     def test_player_get_photo_list(self):
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player': 'testserver{}'.format(self.player.photo.url),
-                                                                      'player2': 'testserver{}'.format(self.player2.photo.url)})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo_list': {'player': 'testserver{}'.format(self.player.photo.url),
+                                                                                     'player2': 'testserver{}'.format(self.player2.photo.url)}})
 
     def test_player_get_photo_list_no_photo(self):
         self.player2.photo = None
         self.player2.save()
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player': 'testserver{}'.format(self.player.photo.url),
-                                                                      'player2': None})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'photo_list': {'player': 'testserver{}'.format(self.player.photo.url),
+                                                                                     'player2': None}})
 
     def test_player_get_photo_list_wrong_nickname(self):
         response = self.client.post(self.url, self.send_data_wrong_nickname)
@@ -171,15 +171,15 @@ class PlayerGetAudioListViewTest(PlayersSetupTestCase):
 
     def test_player_get_audio_list(self):
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player': 'testserver{}'.format(self.player.audio.url),
-                                                                      'player2': 'testserver{}'.format(self.player2.audio.url)})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio_list': {'player': 'testserver{}'.format(self.player.audio.url),
+                                                                                     'player2': 'testserver{}'.format(self.player2.audio.url)}})
 
     def test_player_get_audio_list_no_audio(self):
         self.player2.audio = None
         self.player2.save()
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'player': 'testserver{}'.format(self.player.audio.url),
-                                                                      'player2': None})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'audio_list': {'player': 'testserver{}'.format(self.player.audio.url),
+                                                                                     'player2': None}})
 
     def test_player_get_audio_list_wrong_nickname(self):
         response = self.client.post(self.url, self.send_data_wrong_nickname)
