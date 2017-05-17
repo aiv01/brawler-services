@@ -54,6 +54,7 @@ Sprint 5 - May 17 - May 31
 * Achievements (backstab, km run, number of attacks, combo length ...)
 * Credits API (finalize)
 * Study ElasticSearch
+* Censorship api
 
 (sprint meeting)
 
