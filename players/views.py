@@ -191,7 +191,7 @@ class PlayerGetPhotoListView(View):
         nickname_list = request.POST.get('nickname_list')
 
         nickname_list = nickname_list.split(', ')
-        photo_list = []
+        photo_dict = {}
         host = request.get_host()
 
         try:
@@ -209,11 +209,11 @@ class PlayerGetPhotoListView(View):
                 return JsonResponse({'error': 'player \'{}\' does not exists'.format(nickname)})
 
             try:
-                photo_list.append({'nickname': nickname, 'photo': host + player.photo.url})
+                photo_dict[nickname] = host + player.photo.url
             except:
-                photo_list.append({'nickname': nickname, 'photo': None})
+                photo_dict[nickname] = None
 
-        return JsonResponse({'photo_list': photo_list})
+        return JsonResponse(photo_dict)
 
 
 class PlayerGetAudioListView(View):
@@ -227,7 +227,7 @@ class PlayerGetAudioListView(View):
         nickname_list = request.POST.get('nickname_list')
 
         nickname_list = nickname_list.split(', ')
-        audio_list = []
+        audio_dict = {}
         host = request.get_host()
 
         try:
@@ -245,8 +245,8 @@ class PlayerGetAudioListView(View):
                 return JsonResponse({'error': 'player \'{}\' does not exists'.format(nickname)})
 
             try:
-                audio_list.append({'nickname': nickname, 'audio': host + player.audio.url})
+                audio_dict[nickname] = host + player.audio.url
             except:
-                audio_list.append({'nickname': nickname, 'audio': None})
+                audio_dict[nickname] = None
 
-        return JsonResponse({'audio_list': audio_list})
+        return JsonResponse(audio_dict)
