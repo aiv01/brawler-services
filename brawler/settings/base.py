@@ -29,12 +29,13 @@ INSTALLED_APPS = [
     'players',
     'servers',
     'credits',
+    'badwords',
     # 'cookielaw',
 ]
 
-MANAGERS = (("errors", "errors@mantainer-domain.com"),)
-ADMINS = MANAGERS
-SERVER_EMAIL = 'errors@mantainer-domain.com'
+# MANAGERS = (("errors", "errors@mantainer-domain.com"),)
+# ADMINS = MANAGERS
+# SERVER_EMAIL = 'errors@mantainer-domain.com'
 
 # !!! set EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS
 
@@ -109,4 +110,5 @@ ADMIN_REORDER = (
     {'app': 'players', },
     {'app': 'servers', },
     {'app': 'credits', 'models': ('credits.Credit', 'credits.Role')},
+    {'app': 'badwords', },
 )
