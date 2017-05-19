@@ -55,6 +55,7 @@ Sprint 5 - May 17 - May 31
 * Credits API (finalize)
 * Study ElasticSearch
 * Censorship api
+* Default photos (Spare)
 
 (sprint meeting)
 
