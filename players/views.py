@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
-from players.models import Player
+from players.models import Player, PlayerDefaultImages
 from players.utilities import create_token, bit_to_png, bit_to_bin
 from ipware.ip import get_ip
 
@@ -250,3 +250,32 @@ class PlayerGetAudioListView(View):
                 audio_dict[nickname] = None
 
         return JsonResponse(audio_dict)
+
+
+class PlayerDefaultImagesView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PlayerDefaultImagesView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        host = request.get_host()
+
+        try:
+            Player.objects.get(token=token)
+        except ValidationError:
+            return JsonResponse({'error': 'invalid token format'})
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this token does not exists'})
+
+        players_default_images = PlayerDefaultImages.objects.all()
+        players_default_images_list = []
+
+        for default_image in players_default_images:
+            players_default_images_dict = {}
+            players_default_images_dict[default_image.title] = host + default_image.image.url
+            players_default_images_dict['last_modified'] = str(default_image.last_modified)
+            players_default_images_list.append(players_default_images_dict)
+
+        return JsonResponse({'default_images': players_default_images_list})

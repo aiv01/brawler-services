@@ -23,3 +23,17 @@ class Player(AbstractUser):
         return self.username
 
 Player._meta.get_field('username').verbose_name = 'Nickname'
+
+
+class PlayerDefaultImages(models.Model):
+    title = models.CharField('Titolo', max_length=255)
+    image = models.ImageField('Immagine', upload_to='players/default-images/')
+    image_thumb = ImageSpecField(source='image', processors=[SmartResize(100, 100)], format='PNG', options={'quality': 100})
+    last_modified = models.DateTimeField('Ultima modifica', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Immagini di default'
+        verbose_name_plural = 'Immagini di default'
+
+    def __str__(self):
+        return self.title

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from players.models import Player
+from players.models import Player, PlayerDefaultImages
 from servers.models import Server
 from credits.models import Role, Credit
 from badwords.models import Badword
@@ -10,6 +10,14 @@ class PlayersSetupTestCase(TestCase):
     def setUp(self):
         self.player = Player.objects.create_user(username='player', password='password', tagline='tagline',
                                                  photo='test.png', audio='test.ogg', ip='127.0.0.1')
+
+
+class PlayerDefaultImagesSetupTestCase(TestCase):
+
+    def setUp(self):
+        self.player = Player.objects.create_user(username='player', password='password')
+        self.default_image_1 = PlayerDefaultImages.objects.create(title='Title 1', image='test.png')
+        self.default_image_2 = PlayerDefaultImages.objects.create(title='Title 2', image='test.png')
 
 
 class ServersSetupTestCase(TestCase):

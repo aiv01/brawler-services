@@ -1,0 +1,12 @@
+{% extends 'admin_lightbox/base.html' %}
+
+{% block base %}
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	{{ block.super }}
+
+	{% if thumbnail %}
+		<a class="image-link" href="{{ model.image.url }}" title="{{ model.title }}">
+			<img src="{{ thumbnail.url }}">
+		</a>
+	{% endif %}
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from tests.setuptest import PlayersSetupTestCase
+from tests.setuptest import PlayersSetupTestCase, PlayerDefaultImagesSetupTestCase
 from players.models import Player
 
 
@@ -190,5 +190,34 @@ class PlayerGetAudioListViewTest(PlayersSetupTestCase):
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this token does not exists'})
 
     def test_player_get_audio_list_wrong_token_format(self):
+        response = self.client.post(self.url, self.send_data_wrong_token_format)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})
+
+
+class PlayerDefaultImagesViewTest(PlayerDefaultImagesSetupTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('player_default_images')
+        self.send_data = {'token': self.player.token}
+        self.send_data_wrong_token = {'token': '2c16bed0-f468-4e06-b68e-f930ea994f44'}
+        self.send_data_wrong_token_format = {'token': '1230-0034-0323-dkfm'}
+
+    def test_player_default_images(self):
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), [{'Title 1': 'testserver{}'.format(self.default_image_1.image.url), 'last_modified': str(self.default_image_1.last_modified)},
+                                                                      {'Title 2': 'testserver{}'.format(self.default_image_2.image.url), 'last_modified': str(self.default_image_2.last_modified)}])
+
+    def test_player_default_images_no_images(self):
+        self.default_image_1.delete()
+        self.default_image_2.delete()
+        response = self.client.post(self.url, self.send_data)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'default_images': []})
+
+    def test_player_default_images_wrong_token(self):
+        response = self.client.post(self.url, self.send_data_wrong_token)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'player with this token does not exists'})
+
+    def test_player_default_images_wrong_token_format(self):
         response = self.client.post(self.url, self.send_data_wrong_token_format)
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'invalid token format'})
