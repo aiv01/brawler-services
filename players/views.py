@@ -115,11 +115,24 @@ class PlayerClientAuthView(View):
         port = request.POST.get('port')
         ip = get_ip(request)
 
+        print('************************************************')
+        print('token --> {}'.format(token))
+        print('port --> {}'.format(port))
+        print('ip --> {}'.format(ip))
+        print('************************************************')
+
         try:
             player = Player.objects.get(token=token)
         except ValidationError:
+            print('************************************************')
+            print("{'error': 'invalid token format'}")
+            print('************************************************')
+
             return JsonResponse({'error': 'invalid token format'})
         except Player.DoesNotExist:
+            print('************************************************')
+            print("{'auth_ok': False, 'fields': 'token', 'info': 'player with this token does not exists'}")
+            print('************************************************')
             return JsonResponse({'auth_ok': False,
                                  'fields': 'token',
                                  'info': 'player with this token does not exists'})
@@ -127,8 +140,14 @@ class PlayerClientAuthView(View):
         if ip == player.ip:
             player.port = port
             player.save()
+            print('************************************************')
+            print("{'auth_ok': True}")
+            print('************************************************')
             return JsonResponse({'auth_ok': True})
         else:
+            print('************************************************')
+            print("{'auth_ok': False, 'fields': 'ip', 'info': 'ip are not equal'}")
+            print('************************************************')
             return JsonResponse({'auth_ok': False,
                                  'fields': 'ip',
                                  'info': 'ip are not equal'})
