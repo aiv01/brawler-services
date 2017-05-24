@@ -4,11 +4,11 @@ from badwords.models import Badword
 
 @admin.register(Badword)
 class BadwordAdmin(admin.ModelAdmin):
-    list_display = ('word', 'player')
-    search_fields = ('word', 'player')
+    list_display = ('word', 'replace_word', 'player')
+    search_fields = ('word', 'replace_word', 'player')
     list_filter = (('player', admin.RelatedOnlyFieldListFilter), )
     fieldsets = (
-        ('Badword', {'fields': (('word', 'player'), )}, ), )
+        ('Badword', {'fields': (('word', 'replace_word', 'player'), )}, ), )
     readonly_fields = ('player', )
 
     def save_model(self, request, obj, form, change):

@@ -205,8 +205,8 @@ class PlayerDefaultImagesViewTest(PlayerDefaultImagesSetupTestCase):
 
     def test_player_default_images(self):
         response = self.client.post(self.url, self.send_data)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), [{'Title 1': 'testserver{}'.format(self.default_image_1.image.url), 'last_modified': str(self.default_image_1.last_modified)},
-                                                                      {'Title 2': 'testserver{}'.format(self.default_image_2.image.url), 'last_modified': str(self.default_image_2.last_modified)}])
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'default_images': [{'Title 1': 'testserver{}'.format(self.default_image_1.image.url), 'last_modified': str(self.default_image_1.last_modified)},
+                                                                      {'Title 2': 'testserver{}'.format(self.default_image_2.image.url), 'last_modified': str(self.default_image_2.last_modified)}]})
 
     def test_player_default_images_no_images(self):
         self.default_image_1.delete()

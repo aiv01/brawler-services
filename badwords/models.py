@@ -4,10 +4,12 @@ from players.models import Player
 
 class Badword(models.Model):
     word = models.CharField('Parola', max_length=255, unique=True, help_text='Case insensitive')
+    replace_word = models.CharField('Parola sostitutiva', max_length=255, blank=True, null=True, help_text='Case insensitive')
     player = models.ForeignKey(Player, verbose_name='Player', blank=True, null=True)
 
     def clean(self):
         self.word = self.word.lower()
+        self.replace_word = self.replace_word.lower()
 
     class Meta:
         verbose_name = 'Badword'

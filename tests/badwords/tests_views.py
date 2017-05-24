@@ -14,12 +14,12 @@ class BadwordJsonViewTest(BadwordsSetupTestCase):
 
     def test_badword_json(self):
         response = self.client.get(self.url)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'badwords': ['Badword 1', 'Badword 2']})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'Badword 1': 'Replace Badword 1', 'Badword 2': 'Replace Badword 2'})
 
     def test_player_with_privileges_badword_json(self):
         response = self.client.post(self.url, self.send_data_with_privileges)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'badwords': [{'player': self.player_1.id, 'word': 'Badword 1'},
-                                                                                   {'player': self.player_2.id, 'word': 'Badword 2'}]})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'badwords': [{'player': self.player_1.username, 'replace_word': 'Replace Badword 1', 'word': 'Badword 1'},
+                                                                                   {'player': self.player_2.username, 'replace_word': 'Replace Badword 2', 'word': 'Badword 2'}]})
 
     def test_player_without_privileges_badword_json_wrong_token(self):
         response = self.client.post(self.url, self.send_data_without_privileges)
@@ -37,7 +37,7 @@ class BadwordJsonViewTest(BadwordsSetupTestCase):
         self.badword_1.delete()
         self.badword_2.delete()
         response = self.client.get(self.url)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'badwords': []})
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {})
 
     def test_player_badword_json_delete(self):
         self.badword_1.delete()

@@ -41,5 +41,5 @@ class BadwordsSetupTestCase(TestCase):
         self.player_1 = Player.objects.create_user(username='player_1', password='password_1', is_staff=True)
         self.player_2 = Player.objects.create_user(username='player_2', password='password_2', is_staff=False)
 
-        self.badword_1 = Badword.objects.create(word='Badword 1', player=self.player_1)
-        self.badword_2 = Badword.objects.create(word='Badword 2', player=self.player_2)
+        self.badword_1 = Badword.objects.create(word='Badword 1', replace_word='Replace Badword 1', player=self.player_1)
+        self.badword_2 = Badword.objects.create(word='Badword 2', replace_word='Replace Badword 2', player=self.player_2)

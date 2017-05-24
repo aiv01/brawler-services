@@ -14,8 +14,10 @@ class BadwordJsonView(View):
         return super(BadwordJsonView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        badwords_list = list(Badword.objects.all().values_list('word', flat=True))
-        return JsonResponse({'badwords': badwords_list})
+        badwords_dict = {}
+        for badword in Badword.objects.all():
+            badwords_dict[badword.word] = badword.replace_word
+        return JsonResponse(badwords_dict)
 
     def post(self, request):
         token = request.POST.get('token')
@@ -28,7 +30,7 @@ class BadwordJsonView(View):
             return JsonResponse({'error': 'player with this token does not exists'})
 
         if player.is_staff is True:
-            badwords_list = list(Badword.objects.all().values('player', 'word'))
+            badwords_list = list(Badword.objects.all().values('player', 'word', 'replace_word'))
             return JsonResponse({'badwords': badwords_list})
 
         return JsonResponse({'error': 'access denied'})
