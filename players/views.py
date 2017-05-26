@@ -124,6 +124,9 @@ class PlayerClientAuthView(View):
                                  'fields': 'token',
                                  'info': 'player with this token does not exists'})
 
+        if ip.startswith('192.168.') or ip.startswith('10.'):
+            return JsonResponse({'auth_ok': True})
+
         if ip == player.ip:
             player.port = port
             player.save()
