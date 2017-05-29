@@ -9,7 +9,8 @@ class Badword(models.Model):
 
     def clean(self):
         self.word = self.word.lower()
-        self.replace_word = self.replace_word.lower()
+        if self.replace_word:
+            self.replace_word = self.replace_word.lower()
 
     class Meta:
         verbose_name = 'Badword'
