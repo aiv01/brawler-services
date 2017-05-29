@@ -96,7 +96,8 @@ class PlayerServerAuthView(View):
                                  'info': 'player with this token does not exists'})
 
         if ip.startswith('192.168.') or ip.startswith('10.'):
-            return JsonResponse({'auth_ok': True})
+            return JsonResponse({'auth_ok': True,
+                                 'nickname': player.username})
 
         if ip == player.ip:
             return JsonResponse({'auth_ok': True,
