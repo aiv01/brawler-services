@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from tests.setuptest import ServersSetupTestCase
 
 
 class ServerRegisterViewTests(TestCase):
@@ -22,3 +23,21 @@ class ServerRegisterViewTests(TestCase):
         self.assertJSONEqual(str(response.content, encoding='utf8'), {'server_register': False,
                                                                       'fields': 'ip, port',
                                                                       'info': 'invalid ip and/or port'})
+
+
+class ServersJsonViewTest(ServersSetupTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('servers_json')
+
+    def test_credit_json(self):
+        response = self.client.get(self.url)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'servers': [{'country': 'Italy (IT)',
+                                                                                   'port': 50010,
+                                                                                   'ip': '79.58.170.103'}]})
+
+    def test_credit_json_delete(self):
+        self.server.delete()
+        response = self.client.get(self.url)
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'servers': []})

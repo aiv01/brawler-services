@@ -30,3 +30,10 @@ class ServerRegisterView(View):
                                      'info': 'invalid ip and/or port'})
 
         return JsonResponse({'server_register': True})
+
+
+class ServersJsonView(View):
+
+    def get(self, request):
+        server_list = list(Server.objects.all().values('ip', 'port', 'country'))
+        return JsonResponse({'servers': server_list})

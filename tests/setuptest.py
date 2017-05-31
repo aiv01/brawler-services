@@ -23,7 +23,7 @@ class PlayerDefaultImagesSetupTestCase(TestCase):
 class ServersSetupTestCase(TestCase):
 
     def setUp(self):
-        self.server = Server.objects.create(ip='79.58.170.103', port='50010')
+        self.server = Server.objects.create(ip='79.58.170.103', port='50010', country='Italy (IT)')
 
 
 class CreditsSetupTestCase(TestCase):
