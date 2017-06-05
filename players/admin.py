@@ -16,18 +16,9 @@ class PlayerAdmin(UserAdmin):
         ('Endpoint', {'fields': (('ip', 'port'), ), }),
         ('Password', {'fields': (('password', ), ('token', ), ), }),
         ('Privilegi', {'fields': (('is_active', 'is_staff', 'is_superuser'), ), }),
-        ('Match vinti', {'fields': (('match_won_count', 'match_won'), ), }),
-        ('Match partecipati', {'fields': (('match_partecipated_count', 'match_partecipated'), ), }), )
-    readonly_fields = ('last_login', 'registration_date', 'ip', 'port', 'token', 'photo_thumbnail', 'match_won', 'match_partecipated', 'match_won_count', 'match_partecipated_count')
+        ('Match', {'fields': (('match_won_count', 'match_partecipated_count'), ), }), )
+    readonly_fields = ('last_login', 'registration_date', 'ip', 'port', 'token', 'photo_thumbnail', 'match_won_count', 'match_partecipated_count')
     ordering = ['-registration_date']
-
-    def match_won(self, model):
-        return ", ".join([str(match) for match in Match.objects.filter(winner__username=model.username)])
-    match_won.short_description = 'Match vinti'
-
-    def match_partecipated(self, model):
-        return ", ".join([str(match) for match in Match.objects.filter(participants__username=model.username)])
-    match_partecipated.short_description = 'Match Partecipati'
 
     def match_won_count(self, model):
         return Match.objects.filter(winner__username=model.username).count()
