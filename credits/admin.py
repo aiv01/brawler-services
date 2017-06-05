@@ -7,7 +7,7 @@ from credits.models import Credit, Role
 class CreditAdmin(PositionAdmin):
     list_display = ('position', 'name', 'surname', 'get_roles')
     list_display_links = ('name', )
-    search_fields = ('name', 'surname', 'roles')
+    search_fields = ('name', 'surname', 'roles__role')
     list_filter = ('roles', )
     fieldsets = (
         ('Nome e cognome', {'fields': (('name', 'surname'), ), }),

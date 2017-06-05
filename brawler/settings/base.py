@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'sortable',
     'admin_reorder',
     'players',
+    'match',
     'servers',
     'credits',
     'badwords',
@@ -108,6 +109,7 @@ AUTH_USER_MODEL = 'players.Player'
 
 ADMIN_REORDER = (
     {'app': 'players', },
+    {'app': 'match', },
     {'app': 'servers', },
     {'app': 'credits', 'models': ('credits.Credit', 'credits.Role')},
     {'app': 'badwords', },
