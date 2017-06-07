@@ -12,6 +12,5 @@ class BadwordAdmin(admin.ModelAdmin):
     readonly_fields = ('player', )
 
     def save_model(self, request, obj, form, change):
-        if getattr(obj, 'player', None) is None:
-            obj.player = request.user
+        obj.player = request.user
         obj.save()
