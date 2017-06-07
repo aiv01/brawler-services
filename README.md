@@ -63,6 +63,17 @@ Sprint 6 - May 31 - Jun 14
 -
 
 * Server registration listing API for game clients
+* json api for returning the list of playing warriors
+* json api for spectators actions
+* udp packets to brawler-server (https://docs.python.org/3/library/struct.html)
+
+```python
+import socket
+import struct
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.sendto(data, (ip_as_string, port_as_int))
+```
 
 (sprint meeting)
 
