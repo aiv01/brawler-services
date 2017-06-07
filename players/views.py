@@ -95,7 +95,7 @@ class PlayerServerAuthView(View):
                                  'fields': 'token',
                                  'info': 'player with this token does not exists'})
 
-        if ip.startswith('192.168.') or ip.startswith('10.'):
+        if ip.startswith('192.168.') or ip.startswith('10.') or ip.startswith('127.'):
             return JsonResponse({'auth_ok': True,
                                  'nickname': player.username})
 
@@ -128,7 +128,7 @@ class PlayerClientAuthView(View):
                                  'fields': 'token',
                                  'info': 'player with this token does not exists'})
 
-        if ip.startswith('192.168.') or ip.startswith('10.'):
+        if ip.startswith('192.168.') or ip.startswith('10.') or ip.startswith('127.'):
             return JsonResponse({'auth_ok': True})
 
         if ip == player.ip:
