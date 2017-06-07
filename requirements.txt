@@ -1,7 +1,7 @@
 appdirs==1.4.3
 beautifulsoup4==4.5.3
 coverage==4.3.4
-Django==1.11.1
+Django==1.11.2
 django-appconf==1.0.2
 django-classy-tags==0.8.0
 django-cookie-law==1.0.13
