@@ -80,4 +80,6 @@ s.sendto(data, (ip_as_string, port_as_int))
 Sprint 7 - Jun 14 - Jun 28
 -
 
+* implement rooms
+
 (sprint meeting)
