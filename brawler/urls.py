@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^servers/', include('servers.urls')),
     url(r'^credits/', include('credits.urls')),
     url(r'^badwords/', include('badwords.urls')),
+    url(r'^mobile/', include('mobile.urls')),
 ]
 
 admin.site.site_title = 'Brawler'
