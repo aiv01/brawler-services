@@ -24,6 +24,7 @@ class Server(models.Model):
     class Meta:
         verbose_name = 'Server'
         verbose_name_plural = 'Lista server'
+        unique_together = (('ip', 'port'), )
 
     def __str__(self):
         return '{}:{}'.format(self.ip, self.port)
