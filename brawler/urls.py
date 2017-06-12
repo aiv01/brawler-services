@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^servers/', include('servers.urls')),
     url(r'^credits/', include('credits.urls')),
     url(r'^badwords/', include('badwords.urls')),
+    url(r'^match/', include('match.urls')),
     url(r'^mobile/', include('mobile.urls')),
 ]
 
