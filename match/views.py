@@ -95,3 +95,27 @@ class EndMatchView(View):
         match.save()
 
         return JsonResponse({'end_match': True})
+
+
+class ListMatchView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ListMatchView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+        match_list = []
+
+        try:
+            player = Player.objects.get(token=token)
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this token not found'})
+
+        for match in Match.objects.filter(winner=None):
+            match_dict = {}
+            match_dict['id'] = match.id
+            match_dict['participants'] = list(match.participants.all().values_list('username', flat=True))
+            match_list.append(match_dict)
+
+        return JsonResponse({'match_list': match_list})
