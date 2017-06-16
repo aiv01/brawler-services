@@ -62,15 +62,15 @@ class EndMatchView(View):
         return super(EndMatchView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        token = request.POST.get('token')
+        nickname = request.POST.get('nickname')
         id = request.POST.get('id')
         port = request.POST.get('port')
         ip = get_ip(request)
 
         try:
-            player = Player.objects.get(token=token)
+            player = Player.objects.get(username=nickname)
         except Player.DoesNotExist:
-            return JsonResponse({'error': 'player with this token not found'})
+            return JsonResponse({'error': 'player with this nickname not found'})
 
         try:
             server = Server.objects.get(ip=ip, port=port)
@@ -83,9 +83,9 @@ class EndMatchView(View):
             return JsonResponse({'error': 'match with this id and/or server not found'})
 
         try:
-            match.participants.get(token=token)
+            match.participants.get(username=nickname)
         except:
-            return JsonResponse({'error': 'player with this token is not a participant in this match'})
+            return JsonResponse({'error': 'player with this nickname is not a participant in this match'})
 
         if match.end_date:
             return JsonResponse({'error': 'this match is already over'})

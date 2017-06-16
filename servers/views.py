@@ -1,3 +1,4 @@
+from ipware.ip import get_ip
 from django.views import View
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -12,7 +13,7 @@ class ServerRegisterView(View):
         return super(ServerRegisterView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        ip = request.POST.get('ip')
+        ip = get_ip(request)
         port = request.POST.get('port')
 
         try:
