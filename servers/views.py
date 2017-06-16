@@ -15,6 +15,12 @@ class ServerRegisterView(View):
     def post(self, request):
         ip = get_ip(request)
         port = request.POST.get('port')
+        ip_2 = request.META.get('REMOTE_ADDR')
+
+        print('*****************************')
+        print(ip)
+        print(ip_2)
+        print('*****************************')
 
         try:
             Server.objects.get(ip=ip, port=port)
