@@ -109,7 +109,8 @@ AUTH_USER_MODEL = 'players.Player'
 
 ADMIN_REORDER = (
     {'app': 'players', },
-    {'app': 'match', },
+    {'app': 'match', 'models': ('match.Match', )},
+    {'app': 'match', 'label': 'Stanze', 'models': ('match.Room', )},
     {'app': 'servers', },
     {'app': 'credits', 'models': ('credits.Credit', 'credits.Role')},
     {'app': 'badwords', },
