@@ -34,7 +34,7 @@ class MobileMatchParticipants(View):
 
 class MobileMatchAudio(View):
 
-    def get(self, request):
+    def post(self, request):
         mobile_id = request.GET.get('mobile_id')
         audio = request.body
 
