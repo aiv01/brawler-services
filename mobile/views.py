@@ -43,7 +43,7 @@ class MobileMatchAudio(View):
         audio = request.body
 
         model_audio = Audio.objects.create(mobile_id=mobile_id)
-        bit_to_bin(model=model_audio, audio=audio)
+        bit_to_bin(model_audio=model_audio, audio=audio)
 
         return JsonResponse({'mobile_upload_audio': True})
 
