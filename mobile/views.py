@@ -1,6 +1,6 @@
 from django.views import View
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
+# from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from mobile.models import Audio
 from match.models import Match
@@ -34,11 +34,7 @@ class MobileMatchParticipants(View):
 
 class MobileMatchAudio(View):
 
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super(MobileMatchAudio, self).dispatch(request, *args, **kwargs)
-
-    def post(self, request):
+    def get(self, request):
         mobile_id = request.GET.get('mobile_id')
         audio = request.body
 
