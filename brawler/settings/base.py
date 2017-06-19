@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'servers',
     'credits',
     'badwords',
+    'mobile',
     # 'cookielaw',
 ]
 
@@ -114,4 +115,5 @@ ADMIN_REORDER = (
     {'app': 'servers', },
     {'app': 'credits', 'models': ('credits.Credit', 'credits.Role')},
     {'app': 'badwords', },
+    {'app': 'mobile', },
 )
