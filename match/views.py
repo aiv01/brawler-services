@@ -104,7 +104,13 @@ class RoomListView(View):
         except Player.DoesNotExist:
             return JsonResponse({'error': 'player with this token not found'})
 
-        room_list = list(Room.objects.all().values('id', 'lobby'))
+        room_list = []
+        for room in Room.objects.all():
+            room_dict = {}
+            room_dict['id'] = room.id
+            room_dict['lobby'] = room.lobby
+            room_dict['participants'] = list(room.participants.all().values_list('username', flat=True))
+            room_list.append(room_dict)
 
         return JsonResponse({'room_list': room_list})
 
