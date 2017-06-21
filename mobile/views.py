@@ -32,6 +32,15 @@ class MobileMatchParticipants(View):
         return JsonResponse({'error': 'no match found'})
 
 
+class MobileMatchSendEmpower(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MobileMatchAudio, self).dispatch(request, *args, **kwargs)
+
+
+
+
 class MobileMatchAudio(View):
 
     @method_decorator(csrf_exempt)
