@@ -36,7 +36,13 @@ class MobileMatchAudio(View):
 
     def post(self, request):
         mobile_id = request.GET.get('mobile_id')
+        print('********************************')
+        print(mobile_id)
+        print('********************************')
         audio = request.body
+        print('********************************')
+        print(audio)
+        print('********************************')
 
         model_audio = Audio.objects.create(mobile_id=mobile_id)
         bit_to_bin(model_audio=model_audio, audio=audio)
