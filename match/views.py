@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from match.models import Room, Match
 from servers.models import Server
 from players.models import Player
+from match.utilities import bit_to_png
 
 
 class AddRoomView(View):
@@ -187,3 +188,26 @@ class EndMatchView(View):
         match.save()
 
         return JsonResponse({'end_match': True})
+
+
+class WinnerImgView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(WinnerImgView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        match_id = request.GET.get('match_id')
+        token = request.GET.get('token')
+        winner_img = request.body
+
+        try:
+            match = Match.objects.get(id=match_id)
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'match not found'})
+
+        if token != match.player.token:
+            return JsonResponse({'error': 'wrong winner'})
+
+        bit_to_png(match, winner_img)
+        return JsonResponse({'winner_img_upload': True})

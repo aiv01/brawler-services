@@ -1,5 +1,6 @@
 from django.contrib import admin
 from match.models import Room, Match
+from imagekit.admin import AdminThumbnail
 
 
 @admin.register(Room)
@@ -20,18 +21,21 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('id', 'start_date', 'end_date', 'winner', 'get_participants', 'server')
+    list_display = ('id', 'start_date', 'end_date', 'winner', 'winner_img_thumb', 'get_participants', 'server')
     search_fields = ('id', 'winner__username', 'participants__username', 'server__ip', 'server__port', 'server__country')
     date_hierarchy = 'start_date'
     list_filter = (('winner', admin.RelatedOnlyFieldListFilter), ('server', admin.RelatedOnlyFieldListFilter), )
     fieldsets = (
         ('Match', {'fields': (('id', 'server'), ('start_date', 'end_date'), ), }),
-        ('Vincitore', {'fields': (('winner', ), ), }),
+        ('Vincitore', {'fields': (('winner', ), ('winner_img', 'winner_img_thumb'), ), }),
         ('Partecipanti', {'fields': (('participants', ), ), }), )
     filter_horizontal = ('participants', )
-    readonly_fields = ('id', 'start_date')
+    readonly_fields = ('id', 'start_date', 'winner_img_thumb')
     ordering = ['-start_date']
 
     def get_participants(self, model):
         return ", ".join([str(participant) for participant in model.participants.all()])
     get_participants.short_description = 'Partecipanti'
+
+    winner_img_thumb = AdminThumbnail(image_field='winner_img_thumb', template='../templates/admin_lightbox/winner_img.html')
+    winner_img_thumb.short_description = 'Miniatura'

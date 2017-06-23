@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from mobile.models import Audio
 from match.models import Match
 from mobile.utilities import bit_to_bin
+from mobile.utilities import SendEmpower
 
 
 class MobileMatchParticipants(View):
@@ -36,9 +37,25 @@ class MobileMatchSendEmpower(View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(MobileMatchAudio, self).dispatch(request, *args, **kwargs)
+        return super(MobileMatchSendEmpower, self).dispatch(request, *args, **kwargs)
 
+    def post(self, request):
+        mobile_id = request.POST.get('mobile_id')
+        nickname = request.POST.get('nickname')
+        empower_type = int(request.POST.get('empower_type'))
 
+        try:
+            match = Match.objects.filter(winner=None).last()
+        except Match.DoesNotExist:
+            return JsonResponse({'error': 'match not found'})
+
+        try:
+            player = match.participants.get(username=nickname)
+        except:
+            return JsonResponse({'error': 'player with this nickname not found'})
+
+        SendEmpower.send_empower_to_server(player.ip, player.port, empower_type, match.server.ip, match.server.port)
+        return JsonResponse({'send_empower': True})
 
 
 class MobileMatchAudio(View):
@@ -61,21 +78,3 @@ class MobileMatchAudio(View):
         bit_to_bin(model_audio=model_audio, audio=audio)
 
         return JsonResponse({'mobile_upload_audio': True})
-
-
-# class MobileMatchSendEmpower(View):
-#     @method_decorator(csrf_exempt)
-#     def dispatch(self, request, *args, **kwargs):
-#         return super(MobileMatchSendEmpower, self).dispatch(request, *args, **kwargs)
-#
-#     def post(self, request):
-#         mobile_id = request.POST.get('mobile_id')
-#         nickname = request.POST.get('nickname')
-#         empower_type = request.POST.get('empower_type')
-#
-#         try:
-#             player = Player.objects.get(username=nickname)
-#         except Player.DoesNotExist:
-#             return JsonResponse({'error': 'player with this nickname not found'})
-#
-#         data_dict = {'EndPoint': player.ip, 'Port': player.port, 'EmpowerType': empower_type}

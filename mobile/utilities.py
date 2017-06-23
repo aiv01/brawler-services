@@ -1,5 +1,7 @@
-import socket
 import struct
+import time
+import json
+import socket
 from django.utils.text import slugify
 from django.core.files.base import ContentFile
 
@@ -18,8 +20,21 @@ def bit_to_bin(model_audio, audio):
     print('*******************')
 
 
-def send_empower_to_server(ip, port, empower_type, server_ip, server_port):
-    data = struct.pack()
+class SendEmpower:
+    empower_id = 0
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.sendto(data, (server_ip, server_port))
+    def send_empower_to_server(ip, port, empower_type, server_ip, server_port):
+        SendEmpower.empower_id += 1
+
+        empower_dict = {'Ip': ip, 'Port': port, 'EmpowerType': empower_type}
+        empower_json = json.dumps(empower_dict)
+        empower_b = empower_json.encode('utf-8')
+        empower_len = len(empower_b)
+
+        header = struct.pack('<IIBB', SendEmpower.empower_id, int(time.time()), 100, empower_len)
+
+        data = b''.join([header, empower_b])
+        print(data)
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.sendto(data, (server_ip, server_port))

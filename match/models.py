@@ -1,6 +1,8 @@
 from django.db import models
 from servers.models import Server
 from players.models import Player
+from imagekit.models import ImageSpecField
+from imagekit.processors import SmartResize
 
 
 class Room(models.Model):
@@ -22,6 +24,8 @@ class Match(models.Model):
     server = models.ForeignKey(Server, verbose_name='Server', on_delete=models.SET_NULL, blank=True, null=True)
     participants = models.ManyToManyField(Player, verbose_name='Partecipanti', related_name='match_participants', blank=True)
     winner = models.ForeignKey(Player, verbose_name='Vincitore', related_name='match_winner', on_delete=models.SET_NULL, blank=True, null=True)
+    winner_img = models.ImageField('Immagine', upload_to='match/winner-images/', blank=True, null=True)
+    winner_img_thumb = ImageSpecField(source='winner_img', processors=[SmartResize(100, 100)], format='PNG', options={'quality': 100})
 
     class Meta:
         verbose_name = 'Match'
