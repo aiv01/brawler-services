@@ -34,7 +34,25 @@ class SendEmpower:
         header = struct.pack('<IIBB', SendEmpower.empower_id, int(time.time()), 100, empower_len)
 
         data = b''.join([header, empower_b])
-        print(data)
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.sendto(data, (server_ip, server_port))
+
+
+class SendMessage:
+    message_id = 0
+
+    def send_message_to_server(mobile_name, text, server_ip, server_port):
+        SendMessage.message_id += 1
+
+        message_dict = {'Name': mobile_name, 'Text': text}
+        message_json = json.dumps(message_dict)
+        message_b = message_json.encode('utf-8')
+        message_len = len(message_b)
+
+        header = struct.pack('<IIBB', SendMessage.message_id, int(time.time()), 123, message_len)
+
+        data = b''.join([header, message_b])
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.sendto(data, (server_ip, server_port))

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from mobile.models import Audio
 from match.models import Match
 from mobile.utilities import bit_to_bin
-from mobile.utilities import SendEmpower
+from mobile.utilities import SendEmpower, SendMessage
 
 
 class MobileMatchParticipants(View):
@@ -46,16 +46,39 @@ class MobileMatchSendEmpower(View):
 
         try:
             match = Match.objects.filter(winner=None).last()
+            print(match)
         except Match.DoesNotExist:
             return JsonResponse({'error': 'match not found'})
 
         try:
             player = match.participants.get(username=nickname)
+            print(player)
         except:
             return JsonResponse({'error': 'player with this nickname not found'})
 
         SendEmpower.send_empower_to_server(player.ip, player.port, empower_type, match.server.ip, match.server.port)
         return JsonResponse({'send_empower': True})
+
+
+class MobileMatchSendMessage(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MobileMatchSendMessage, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        mobile_id = request.POST.get('mobile_id')
+        mobile_name = request.POST.get('mobile_name')
+        text = request.POST.get('text')
+
+        try:
+            match = Match.objects.filter(winner=None).last()
+            print(match)
+        except Match.DoesNotExist:
+            return JsonResponse({'error': 'match not found'})
+
+        SendMessage.send_message_to_server(mobile_name, text, match.server.ip, match.server.port)
+        return JsonResponse({'send_message': True})
 
 
 class MobileMatchAudio(View):
