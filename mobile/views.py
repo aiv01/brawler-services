@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from mobile.models import Audio
 from match.models import Match
-from mobile.utilities import bit_to_bin
-from mobile.utilities import SendEmpower, SendMessage
+from players.models import Player
+from mobile.utilities import bit_to_bin, SendEmpower, SendMessage
 
 
 class MobileMatchParticipants(View):
@@ -89,15 +89,27 @@ class MobileMatchAudio(View):
 
     def post(self, request):
         mobile_id = request.GET.get('mobile_id')
-        print('********************************')
-        print(mobile_id)
-        print('********************************')
         audio = request.body
-        print('********************************')
-        print(audio)
-        print('********************************')
 
         model_audio = Audio.objects.create(mobile_id=mobile_id)
         bit_to_bin(model_audio=model_audio, audio=audio)
 
         return JsonResponse({'mobile_upload_audio': True})
+
+
+class MobileMatchGetAudio(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MobileMatchGetAudio, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        token = request.POST.get('token')
+
+        try:
+            Player.objects.get(token=token)
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'player with this token not found'})
+
+        audio = Audio.objects.last().audio.url
+        return JsonResponse({'audio': audio})

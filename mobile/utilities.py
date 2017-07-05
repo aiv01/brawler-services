@@ -7,17 +7,8 @@ from django.core.files.base import ContentFile
 
 
 def bit_to_bin(model_audio, audio):
-    print('*******************')
-    print(model_audio.mobile_id)
-    print('*******************')
     model_audio.audio = ContentFile(audio, '{}.bin'.format(slugify(model_audio.mobile_id)))
-    print('*******************')
-    print(model_audio.mobile_id)
-    print('*******************')
     model_audio.save()
-    print('*******************')
-    print(model_audio.audio.url)
-    print('*******************')
 
 
 class SendEmpower:

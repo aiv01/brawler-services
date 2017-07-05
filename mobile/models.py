@@ -3,7 +3,7 @@ from django.db import models
 
 class Audio(models.Model):
     mobile_id = models.CharField('Mobile ID', max_length=255)
-    audio = models.FileField('Audio', blank=True, null=True)
+    audio = models.FileField('Audio', upload_to='mobile/audio/', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Audio'
